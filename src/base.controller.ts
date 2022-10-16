@@ -1,19 +1,13 @@
-// I'm relying on inheritance.
-// ! let's define CRUD methods.
-
 import { Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { Document, Model, ObjectId } from "mongoose";
 import { IPagination } from "./types";
 import { http_formatter } from "./util";
 
-// we have created a generic base controller.
 export class BaseController<T> {
     
     private DEFAULT_ERROR_MSG: string = 'Something went wrong';
-    // this is nothing but collection.
     constructor(public model: Model<T>) {
-        // this.model can be 'Student', 'Officer', 'Task', 'Any Schema'
     }
     
     public errorHandler(res: Response, error: any, statusCode: StatusCodes = StatusCodes.BAD_REQUEST){

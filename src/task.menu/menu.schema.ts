@@ -1,22 +1,32 @@
 import { Document, model, Schema } from "mongoose";
 import { z } from 'zod';
-export const StarterValidator = z.object({
+
+const category_enum = [ 
+    "Starter", "Main course", "Beverage", "Desert", "combo", 
+ ] as const;
+
+export const menuValidator = z.object({
      name: z.string().min(2).max(50).trim(),
+     category: z.enum(category_enum).default("Starter").optional(),
      description: z.string().min(10),
      price: z.number().max(5).min(1),
-     Quantity: z.string().min(1).max(10),
+     Quantity: z.string().min(2).max(20),
      isDeleted: z.boolean().default(false).optional(),
      
         });
 
-export type Starter = z.infer<typeof StarterValidator>;
+export type menu = z.infer<typeof menuValidator>;
 
-export interface IStarter extends Document, Starter {}
+export interface IMenu extends Document, menu {}
 
-const StarterSchema = new Schema<IStarter>({
+const menuSchema = new Schema<IMenu>({
     name: {
         type: String,
         required: true,
+    },
+    category: {
+        type: category_enum,
+        default:"Starter"
     },
     description: {
         type: String,
@@ -30,7 +40,6 @@ const StarterSchema = new Schema<IStarter>({
         type: String,
         required: true,
     },
-    
     isDeleted: {
         type: Boolean, 
         default: false,
@@ -40,4 +49,4 @@ const StarterSchema = new Schema<IStarter>({
     versionKey: false
 });
 
-export const Starter = model<IStarter>("Starter", StarterSchema);
+export const menu = model<IMenu>("menu", menuSchema);

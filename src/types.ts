@@ -35,18 +35,18 @@ export interface IFindPaginationQuery{
 export interface IEnv {
   stage?: string;
   port: number;
-  db: IMongoDBCfg;
+  db: string;
   domain: string;
   apiPath: string;
   staticPath: string;
 }
 
-export interface IMongoDBCfg {
-  name: string;
-  user: string;
-  pw: string;
-  account: string;
-  uri: (user: string, pw: string, name: string, account: string) => string;
+ export interface IMongoDBCfg {
+   name: string;
+   user: string;
+   pw: string;
+   account: string;
+   uri: (user: string, pw: string, name: string, account: string) => string;
 }
 
 export interface IModel {
